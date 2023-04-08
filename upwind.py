@@ -46,7 +46,7 @@ class Simulation:
         _, ax = fig_ax
         title = f"Density over space and time"
         ax.set_title(title)
-        ax.imshow(sol, cmap="gray", vmin=0, vmax=self.rho_max)
+        ax.imshow(sol.T, cmap="gray", vmin=0, vmax=self.rho_max)
         ax.set_xlabel("Space")
         ax.set_ylabel("Time")
 
