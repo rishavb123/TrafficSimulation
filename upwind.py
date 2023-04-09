@@ -89,10 +89,6 @@ class Simulation:
         rho = sol[:, j - 1]
         f = self.compute_f(rho)
         sol[:-1, j] = rho[:-1] - self.h[j - 1] / self.s * (f[1:] - f[:-1])
-        # sol[:-1, j] = sol[:-1, j - 1] - self.v_max * self.h[j - 1] / self.s * (
-        #     (1 - sol[1:, j - 1] / self.rho_max) * sol[1:, j - 1]
-        #     - (1 - sol[:-1, j - 1] / self.rho_max) * sol[:-1, j - 1]
-        # )
 
     def update_lax_friedrichs(self, sol, j):
         rho = sol[:, j - 1]

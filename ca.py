@@ -125,13 +125,20 @@ class Simulation:
 
 
 def main():
+    
+    fig, axes = plt.subplots(2, 2, figsize=(14, 14))
+    
+    s = Simulation(v_max=5, road_length=300, t_max=100, include_randomization=False)
+    sol = s.run_simulation(init_dens=0.1)
+
+    s.plot_velocity_heatmap(sol, fig_ax=(fig, axes[0][0]))
+    s.plot_velocity_animation(sol, fig_ax=(fig, axes[0][1]))
+    
     s = Simulation(v_max=5, road_length=300, t_max=100, include_randomization=True)
     sol = s.run_simulation(init_dens=0.1)
     
-    fig, axes = plt.subplots(1, 2, figsize=(14, 7))
-
-    s.plot_velocity_heatmap(sol, fig_ax=(fig, axes[0]))
-    s.plot_velocity_animation(sol, fig_ax=(fig, axes[1]))
+    s.plot_velocity_heatmap(sol, fig_ax=(fig, axes[1][0]))
+    s.plot_velocity_animation(sol, fig_ax=(fig, axes[1][1]))
     
     plt.show()
 
