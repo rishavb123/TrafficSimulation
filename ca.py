@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
 
 class Simulation:
@@ -78,7 +79,7 @@ class Simulation:
                 next_vel[int((i + vel[i]) % self.road_length)] = vel[i]
         return next_vel
         
-    def plot_density_heatmap(self, sol, fig_ax=None, cmap="gray"):
+    def plot_velocity_heatmap(self, sol, fig_ax=None, cmap="gray"):
         if fig_ax is None:
             fig_ax = plt.subplots()
         _, ax = fig_ax
@@ -88,7 +89,7 @@ class Simulation:
         ax.set_xlabel("Space")
         ax.set_ylabel("Time")
                 
-    def plot_density_animation(self, sol, fig_ax=None, log_t=False):
+    def plot_velocity_animation(self, sol, fig_ax=None, log_t=False):
         if fig_ax is None:
             fig_ax = plt.subplots()
         fig, ax = fig_ax
@@ -99,7 +100,7 @@ class Simulation:
 
         def init():
             ax.set_xlim(0, self.road_length)
-            ax.set_ylim(-2, self.vel_max + 1)
+            ax.set_ylim(-2, self.v_max + 1)
             ax.set_title("Velocity vs x")
             ax.set_xlabel("x")
             ax.set_ylabel("velocity")
@@ -109,7 +110,7 @@ class Simulation:
             ln.set_ydata(sol[:, frame_t])
             if log_t:
                 print(f"t={np.sum(self.h[:frame_t + 1]):.1f} s {' ' * 40}", end="\r")
-            return (ln, ln2)
+            return (ln, )
 
         anim = FuncAnimation(
             fig,
@@ -127,7 +128,10 @@ def main():
     s = Simulation(v_max=5, road_length=300, t_max=100, include_randomization=True)
     sol = s.run_simulation(init_dens=0.1)
     
-    s.plot_density_heatmap(sol)
+    fig, axes = plt.subplots(1, 2, figsize=(14, 7))
+
+    s.plot_velocity_heatmap(sol, fig_ax=(fig, axes[0]))
+    s.plot_velocity_animation(sol, fig_ax=(fig, axes[1]))
     
     plt.show()
 
