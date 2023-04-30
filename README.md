@@ -1,8 +1,5 @@
 # TrafficSimulation
 
-Team Member: Rishav Bhagat
-Team Number: 9
-
 Report File: report.pdf
 
 Code Organization:
